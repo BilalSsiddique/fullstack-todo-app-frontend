@@ -28,9 +28,7 @@ const CreateTodo = () => {
       dispatch(saveTodos(body)).then((res) => {
         if (res.meta.requestStatus === "fulfilled") {
           toast.success(res.payload);
-          setTimeout(() => {
-            navigate("/");
-          }, 2000);
+          navigate('/')
         }
         if (res.meta.requestStatus === "rejected") {
           toast.error(res.payload);

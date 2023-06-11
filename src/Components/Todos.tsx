@@ -9,33 +9,49 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import Search from "./Search";
 
 const Todos = () => {
-  const { loading, error, todo, headers } = useAppSelector(
-    (state) => state.todo
-  );
-  const dispatch = useAppDispatch();
+  let { loading, error, todo, headers } = useAppSelector((state) => state.todo);
   const [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState("");
+  const [filteredTodos, setFilterTodos] = useState<Todo[]>();
+
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const filterArray = Array.isArray(todo)
+      ? todo.filter((item, index) =>
+          item.title.toLowerCase().includes(search?.toLowerCase())
+        )
+      : [];
+    setFilterTodos(filterArray);
+  }, [search, todo]);
 
   const itemsPerPage = 5;
   const totalCount = +headers;
-  const totalPagess: number = Math.ceil(totalCount / itemsPerPage);
-  console.log("totalPagess:", totalPagess);
+  const totalPagess = Math.ceil(totalCount / itemsPerPage);
 
+  useEffect(() => {
+    dispatch(fetchTodos({ currentPage, itemsPerPage }));
+  }, [currentPage, dispatch]);
 
   useEffect(() => {
     setCurrentPage(totalPagess);
-    const params = { currentPage, itemsPerPage };
-    dispatch(fetchTodos(params));
-  }, [dispatch, currentPage, totalPagess]);
+    dispatch(fetchTodos({totalPagess,itemsPerPage}))
+  }, [totalPagess]);
 
   const deleteTod = (id: string) => {
     dispatch(deleteTodos(id)).then((res) => {
       console.log("deleted", res);
       if (res.meta.requestStatus === "fulfilled") {
-        const params = { currentPage, itemsPerPage };
-        dispatch(fetchTodos(params));
+        // if(totalCount%5)
+        dispatch(fetchTodos({ currentPage, itemsPerPage })).then((res) => {
+          if (res.meta.requestStatus === "fulfilled") {
+            console.log("totoalPAGES:", totalPagess);
+          }
+        });
         toast.success(res.payload);
       }
       if (res.meta.requestStatus === "rejected") {
@@ -77,36 +93,52 @@ const Todos = () => {
     return (
       <div className="flex flex-col font-extrabold mx-auto my-auto mt-0 items-center justify-center shadow-inner w-2/4 bg-slate-200 h-[200px] text-red-400">
         <p>No Todos Found</p>
-        <button className="bg-slate-400 shadow-inner text-white w-fit p-1 px-2 font-semibold mt-5">
+        <Link to='/create-todo' className="bg-slate-400 shadow-inner text-white w-fit p-1 px-2 font-semibold mt-5">
           Create Todo
-        </button>
+        </Link>
       </div>
     );
   }
 
-  console.log(todo, error, loading);
+  const searchHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setSearch(value);
+  };
 
   return (
     <div className="flex flex-col w-full">
-      <Link
-        to="/create-todo"
-        className="bg-[#73D043] text-left text-sm sm:text-base relative mb-24 mx-auto shadow-inner text-white w-fit p-1 px-8 sm:px-10 font-semibold mt-5"
-      >
-        Create Todo
-        <div className="w-4 h-4 sm:w-5 sm:h-5  rounded-full absolute right-2 bottom-1.5">
-          <AiOutlinePlus
-            fill="white"
-            className="hover:bg-black w-4 h-4 sm:w-5 sm:h-5 rounded-full"
-          />
+      <Search search={search} searchHandler={searchHandler} />
+      <div className="relative mb-10 flex flex-wrap max-[423px]:justify-center gap-12 sm:gap-0  items-center ">
+        <Link
+          to="/create-todo"
+          className="bg-[#73D043] hover:bg-[#61fc14] text-left text-sm sm:text-base relative  mx-auto shadow-inner text-white w-fit p-1 px-8 sm:px-10 font-semibold mt-5"
+        >
+          Create Todo
+          <div className="w-4 h-4 sm:w-5 sm:h-5  rounded-full absolute right-2 bottom-1.5">
+            <AiOutlinePlus
+              fill="white"
+              className="hover:bg-black w-4 h-4 sm:w-5 sm:h-5 rounded-full"
+            />
+          </div>
+        </Link>
+        <div className="sm:text-base text-sm sm:absolute self-end flex gap-1">
+          <div className="flex gap-1 justify-center items-center">
+            <p className="w-5 h-5 rounded-full bg-yellow-400 "></p>
+            <p className=" font-semibold">Pending</p>
+          </div>
+          <div className="flex gap-1 justify-center items-center">
+            <p className="w-5 h-5 rounded-full bg-[#73D043] "></p>
+            <p className="font-semibold">Completed</p>
+          </div>
         </div>
-      </Link>
+      </div>
 
       <div className=" place-items-center grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-x-2 sm:gap-x-2 gap-y-4 ">
-        {Array.isArray(todo) &&
-          todo.length > 0 &&
-          todo.map((tod: Todo, index) => (
+        {Array.isArray(filteredTodos) &&
+          filteredTodos.length > 0 &&
+          filteredTodos.map((tod: Todo, index) => (
             <div
-              className=" shadow-inner relative flex flex-col p-4 px-5 justify-center items-start bg-slate-200 w-full  h-[110px]"
+              className="  shadow-inner relative flex flex-col p-4 px-5 justify-center items-start bg-slate-200 w-full  h-[110px]"
               key={tod._id}
             >
               <h2 className="font-semibold">{tod.title}</h2>
@@ -127,11 +159,17 @@ const Todos = () => {
                   size={18}
                 />
               </div>
+
               <div onClick={() => deleteTod(tod._id)}>
                 <MdDeleteOutline
                   className={`hover:text-[#73D043] hover:font-extrabold cursor-pointer shadow-xl absolute right-3 bottom-6`}
                   size={18}
                 />
+                <p
+                  className={`top-2.5 right-3.5  absolute w-3 h-3 rounded-full ${
+                    tod.check === true ? "bg-[#73D043]" : "bg-yellow-400"
+                  }  `}
+                ></p>
               </div>
             </div>
           ))}

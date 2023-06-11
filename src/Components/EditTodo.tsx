@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useAppDispatch } from "../store/hook";
@@ -12,9 +11,7 @@ const EditTodo = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-   const { loading, error, getTodo } = useAppSelector(
-     (state) => state.todo
-   );
+  const { loading, error, getTodo } = useAppSelector((state) => state.todo);
 
   const {
     register,
@@ -30,13 +27,11 @@ const EditTodo = () => {
     console.log("isValid:", isValid);
     if (isValid) {
       const body = getValues();
-      const upBody = {...body,getTodo}
+      const upBody = { ...body, getTodo };
       dispatch(editTodos(upBody)).then((res) => {
         if (res.meta.requestStatus === "fulfilled") {
           toast.success(res.payload);
-          setTimeout(() => {
-            navigate("/");
-          }, 2000);
+          navigate("/");
         }
         if (res.meta.requestStatus === "rejected") {
           toast.error(res.payload);
@@ -55,8 +50,8 @@ const EditTodo = () => {
 
   return (
     <Form
-    headingTitle= {'EDIT'}
-    getTodo={getTodo}
+      headingTitle={"EDIT"}
+      getTodo={getTodo}
       onSubmit={onSubmit}
       register={register}
       errors={errors}

@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Date } from "mongoose";
+
 
 export type Todo = {
   _id: string;
@@ -17,6 +17,7 @@ type InitialState = {
   headers:string,
   response:string,
   getTodo: object
+  search: string,
 };
 
 const initialState: InitialState = {
@@ -25,7 +26,8 @@ const initialState: InitialState = {
   error: "",
   headers : '',
   response: '',
-  getTodo: {}
+  getTodo: {},
+  search : ""
 };
 
 export const fetchTodos = createAsyncThunk(
@@ -34,11 +36,11 @@ export const fetchTodos = createAsyncThunk(
     
     console.log('tpdp:',params)
     return axios
-      .get("http://localhost:3000/todos/", {
+      .get("https://fullstack-todo-app-backend.up.railway.app/todos/", {
         params: params,
       })
       .then((res) => {
-        return [res.data,res.headers["products-total-count"]]
+        return [res.data, res.headers["products-total-count"]];
       });
   }
 );
@@ -48,7 +50,9 @@ export const deleteTodos = createAsyncThunk(
   async (params:any) => {
     console.log(params)  
     return axios
-      .delete(`http://localhost:3000/todos/${params}`)
+      .delete(
+        `https://fullstack-todo-app-backend.up.railway.app/todos/${params}`
+      )
       .then((res) => {
         return res.data;
       });
@@ -59,17 +63,24 @@ export const saveTodos = createAsyncThunk(
   "todo/saveTodos",
   async (body:any) => {
     
-    return axios.post(`http://localhost:3000/todos/create-todo`,body).then((res) => {
-      return res.data;
-    });
+    return axios
+      .post(
+        `https://fullstack-todo-app-backend.up.railway.app/todos/create-todo`,
+        body
+      )
+      .then((res) => {
+        return res.data;
+      });
   }
 );
 
 export const getTodo = createAsyncThunk("todo/getTodo", async (param:any) => {
 
-  return axios.get(`http://localhost:3000/todos/${param}`).then((res) => {
-    return res.data;
-  });
+  return axios
+    .get(`https://fullstack-todo-app-backend.up.railway.app/todos/${param}`)
+    .then((res) => {
+      return res.data;
+    });
 });
 
 export const editTodos = createAsyncThunk("todo/editTodos", async (body:any) => {
@@ -77,7 +88,7 @@ export const editTodos = createAsyncThunk("todo/editTodos", async (body:any) => 
   const {getTodo} = body
   const {_id}  = getTodo
   return axios
-    .put(`http://localhost:3000/todos/${_id}`, body)
+    .put(`https://fullstack-todo-app-backend.up.railway.app/todos/${_id}`, body)
     .then((res) => {
       return res.data;
     });
@@ -86,7 +97,9 @@ export const editTodos = createAsyncThunk("todo/editTodos", async (body:any) => 
 const todoSlice = createSlice({
   name: "todo",
   initialState,
-  reducers: {},
+  reducers: {
+    
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchTodos.pending, (state, action) => {
       state.loading = true;
@@ -123,5 +136,6 @@ const todoSlice = createSlice({
     //
   },
 });
+
 
 export default todoSlice.reducer;
