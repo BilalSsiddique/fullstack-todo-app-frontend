@@ -5,7 +5,7 @@ const localStorageMiddleware = () => (next) => (action) => {
   if (!token) {
     const currentPath = window.location.pathname;
     if (currentPath !== "/register" && currentPath !== "/login" && currentPath!=='/') {
-      window.location.href = "/register";
+      window.location.href = "/login";
     }
     return next(action);
   }

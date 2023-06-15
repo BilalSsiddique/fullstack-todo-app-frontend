@@ -3,25 +3,26 @@ import Heading from "./Heading";
 import { useAppSelector } from "../store/hook";
 
 const Form = ({
+  buttonTitle,
   onSubmit,
   register,
   errors,
   isValid,
   getTodo,
-  headingTitle='CREATE'
+  headingTitle = "CREATE",
 }: {
   onSubmit: React.FormEventHandler<HTMLFormElement>;
   register: Function;
   isValid: boolean;
   errors: any;
   getTodo?: any;
-  headingTitle?:string
+  headingTitle?: string;
+  buttonTitle:string;
 }) => {
   const { loading, error, todo, headers, response } = useAppSelector(
     (state) => state.todo
   );
 
- 
   return (
     <section id="contact" className="mt-10 mb-20">
       <div className="flex justify-center ">
@@ -107,7 +108,7 @@ const Form = ({
 
               <input
                 type="date"
-                defaultValue={String(getTodo && getTodo.date).slice(0,10)}
+                defaultValue={String(getTodo && getTodo.date).slice(0, 10)}
                 className="text-black rounded-lg w-full border-2 outline-0 bg-white font-semibold placeholder-opaque-black p-3 mt-2"
                 placeholder="date"
                 id="date"
@@ -127,7 +128,7 @@ const Form = ({
               className="disabled:bg-[#cccccc] disabled:border-[#999999] disabled:text-[#666666] disabled:border-solid font-outfit font-bold mt-5 w-full text-sm xs:text-lg bg-[#73D043] text-white rounded-lg  py-3 px-5 
               hover:bg-blue  hover:bg-[#1B4845] transition duration-500"
             >
-              {loading ? "Loading..." : "SEND"}
+              {loading ? "Loading..." :  `${buttonTitle}`}
             </button>
           </form>
         </div>

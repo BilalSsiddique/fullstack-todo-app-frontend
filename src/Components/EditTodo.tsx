@@ -59,6 +59,7 @@ const EditTodo = () => {
       register={register}
       errors={errors}
       isValid={isValid}
+      buttonTitle="UPDATE"
     />
   );
 };

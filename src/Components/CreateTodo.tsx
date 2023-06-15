@@ -54,6 +54,7 @@ const CreateTodo = () => {
       register={register}
       errors={errors}
       isValid={isValid}
+      buttonTitle="CREATE"
     />
   );
 };
