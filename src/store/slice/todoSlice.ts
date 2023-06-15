@@ -48,7 +48,7 @@ const initialState: InitialState = {
 //       });
 //   }
 // );
-axios.defaults.withCredentials = true;
+
 
 export const fetchTodos = createAsyncThunk(
   "todo/fetchTodos",
