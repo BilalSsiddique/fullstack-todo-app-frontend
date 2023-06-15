@@ -4,7 +4,7 @@ const localStorageMiddleware = () => (next) => (action) => {
   const token = localStorage.getItem("token");
   if (!token) {
     const currentPath = window.location.pathname;
-    if (currentPath !== "/register" && currentPath !== "/login") {
+    if (currentPath !== "/register" && currentPath !== "/login" && currentPath!=='/') {
       window.location.href = "/register";
     }
     return next(action);
