@@ -54,13 +54,16 @@ export const fetchTodos = createAsyncThunk(
   async (params?: any) => {
     // console.log("bodysssssssssss", params);
     try {
-      const response = await axios.get("http://localhost:3000/todos/", {
-        headers: { Authorization: `Bearer ${params?.token}` },
-        params: {
-          currentPage: params?.currentPage,
-          itemsPerPage: params?.itemsPerPage,
-        },
-      });
+      const response = await axios.get(
+        "https://fullstack-todo-app-backend.up.railway.app/todos/",
+        {
+          headers: { Authorization: `Bearer ${params?.token}` },
+          params: {
+            currentPage: params?.currentPage,
+            itemsPerPage: params?.itemsPerPage,
+          },
+        }
+      );
       // console.log("response on todoSlice fetch", response);
       return {
         response: response.data,
@@ -92,9 +95,12 @@ export const deleteTodos = createAsyncThunk(
     const { todoId } = params;
     const { token } = params;
     return axios
-      .delete(`http://localhost:3000/todos/${todoId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      .delete(
+        `https://fullstack-todo-app-backend.up.railway.app/todos/${todoId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
       .then((res) => {
         return res.data;
       });
@@ -108,9 +114,13 @@ export const saveTodos = createAsyncThunk(
     const { token } = data;
     const { body } = data;
     return axios
-      .post(`http://localhost:3000/todos/create-todo`, body, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      .post(
+        `https://fullstack-todo-app-backend.up.railway.app/todos/create-todo`,
+        body,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
       .then((res) => {
         console.log("savetodo", res.data);
         return res.data;
@@ -122,7 +132,7 @@ export const getTodo = createAsyncThunk("todo/getTodo", async (param: any) => {
   const { token } = param;
   const { id } = param;
   return axios
-    .get(`http://localhost:3000/todos/${id}`, {
+    .get(`https://fullstack-todo-app-backend.up.railway.app/todos/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     .then((res) => {
@@ -140,9 +150,13 @@ export const editTodos = createAsyncThunk(
     const upbody = { ...body, _id: id };
     // console.log("id inside editRodos", id, upbody, token);
     return axios
-      .put(`http://localhost:3000/todos/${id}`, upbody, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      .put(
+        `https://fullstack-todo-app-backend.up.railway.app/todos/${id}`,
+        upbody,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
       .then((res) => {
         return res.data;
       });
@@ -154,7 +168,10 @@ export const registerUser = createAsyncThunk(
   async (body: any) => {
     // console.log("bodysssssssssss", body);
     try {
-      const response = await axios.post(`http://localhost:3000/register`, body);
+      const response = await axios.post(
+        `https://fullstack-todo-app-backend.up.railway.app/register`,
+        body
+      );
       // console.log("response on todoSlice", response);
       return response.data;
     } catch (error) {
@@ -182,7 +199,10 @@ export const loginUser = createAsyncThunk(
   async (body: any) => {
     // console.log("bodysssssssssss", body);
     try {
-      const response = await axios.post(`http://localhost:3000/login`, body);
+      const response = await axios.post(
+        `https://fullstack-todo-app-backend.up.railway.app/login`,
+        body
+      );
       // console.log("response on todoSlice", response);
       return response.data;
     } catch (error) {
