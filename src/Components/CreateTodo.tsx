@@ -22,13 +22,14 @@ const CreateTodo = () => {
   const onSubmit = async (e: any) => {
     e.preventDefault();
     const isValid = await trigger();
-    console.log("isValid:", isValid);
+    // console.log("isValid:", isValid);
     if (isValid) {
       const body = getValues();
-      dispatch(saveTodos(body)).then((res) => {
+      const token = localStorage.getItem('token')
+      dispatch(saveTodos({body,token})).then((res) => {
         if (res.meta.requestStatus === "fulfilled") {
           toast.success(res.payload);
-          navigate('/')
+          navigate('/todos')
         }
         if (res.meta.requestStatus === "rejected") {
           toast.error(res.payload);

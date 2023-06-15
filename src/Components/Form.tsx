@@ -68,7 +68,7 @@ const Form = ({
                 id="desc"
                 rows={3}
                 cols={30}
-                defaultValue={getTodo && getTodo.description}
+                defaultValue={getTodo && getTodo.desc}
                 {...register("desc", {
                   required: true,
                   maxLength: 2000,
@@ -107,7 +107,7 @@ const Form = ({
 
               <input
                 type="date"
-                defaultValue={String(getTodo && getTodo.Date).slice(0,10)}
+                defaultValue={String(getTodo && getTodo.date).slice(0,10)}
                 className="text-black rounded-lg w-full border-2 outline-0 bg-white font-semibold placeholder-opaque-black p-3 mt-2"
                 placeholder="date"
                 id="date"

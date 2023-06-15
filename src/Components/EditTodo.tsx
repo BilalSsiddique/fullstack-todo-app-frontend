@@ -21,17 +21,20 @@ const EditTodo = () => {
     formState: { errors, isValid },
   } = useForm({ mode: "all" });
 
+  const token  =localStorage.getItem('token')
   const onSubmit = async (e: any) => {
     e.preventDefault();
     const isValid = await trigger();
-    console.log("isValid:", isValid);
+    // console.log("isValid:", isValid);
     if (isValid) {
       const body = getValues();
-      const upBody = { ...body, getTodo };
+      // console.log('idchekinnnnnnnnnnnnnnn',getTodo)
+      const {_id}=getTodo
+      const upBody = { body:body,id:_id,token };
       dispatch(editTodos(upBody)).then((res) => {
         if (res.meta.requestStatus === "fulfilled") {
           toast.success(res.payload);
-          navigate("/");
+          navigate("/todos");
         }
         if (res.meta.requestStatus === "rejected") {
           toast.error(res.payload);
@@ -47,7 +50,7 @@ const EditTodo = () => {
       e.preventDefault();
     }
   };
-
+  // console.log('values',getTodo)
   return (
     <Form
       headingTitle={"EDIT"}

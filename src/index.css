@@ -2,22 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Outfit', sans-serif;
+  font-family: "Space Grotesk", sans-serif;
 }
 
-body{
+body {
   height: 100dvh;
-  
-  
 }
 .loader {
   border: 16px solid #f3f3f3;
-  border-top: 16px solid #73D043;
+  border-top: 16px solid #73d043;
   border-radius: 50%;
   width: 70px;
   height: 70px;
@@ -36,7 +33,6 @@ body{
     transform: rotate(360deg);
   }
 }
-
 
 /* width */
 ::-webkit-scrollbar {

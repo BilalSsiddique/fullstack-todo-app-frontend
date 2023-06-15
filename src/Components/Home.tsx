@@ -1,14 +1,14 @@
-import React from 'react'
-import Todos from './Todos'
-
-
+import React from "react";
+import Todos from "./Todos";
+import Register from "./Login";
+import Heading from "./Heading";
 
 const Home = () => {
   return (
     <div>
-        <Todos/>
+      <Register />
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
