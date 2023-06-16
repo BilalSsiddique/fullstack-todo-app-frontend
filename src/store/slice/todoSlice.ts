@@ -56,7 +56,7 @@ export const fetchTodos = createAsyncThunk(
     console.log("bodysssssssssss", params);
     try {
       const response = await axios.get(
-        "http://localhost:3000/todos/",
+        "https://fullstack-todo-app-backend.up.railway.app/todos/",
         {
           headers: { Authorization: `Bearer ${params?.token}` },
           params: {
