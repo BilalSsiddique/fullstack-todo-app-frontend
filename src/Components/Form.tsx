@@ -24,7 +24,7 @@ const Form = ({
   );
 
   return (
-    <section id="contact" className="mt-10 mb-20">
+    <section id="contact" className="mt-40 mb-20 w-full ">
       <div className="flex justify-center ">
         <Heading our={headingTitle} afterOurText="TODO" mb="mb-0" />
       </div>

@@ -53,10 +53,10 @@ const initialState: InitialState = {
 export const fetchTodos = createAsyncThunk(
   "todo/fetchTodos",
   async (params?: any) => {
-    // console.log("bodysssssssssss", params);
+    console.log("bodysssssssssss", params);
     try {
       const response = await axios.get(
-        "https://fullstack-todo-app-backend.up.railway.app/todos/",
+        "http://localhost:3000/todos/",
         {
           headers: { Authorization: `Bearer ${params?.token}` },
           params: {

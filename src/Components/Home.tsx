@@ -1,11 +1,9 @@
 import React from "react";
-
-import Register from "./Login";
 import Heading from "./Heading";
 
 const Home = () => {
   return (
-    <div>
+    <div className=" flex justify-center items-center">
       <Heading our="SIMPLE" afterOurText={'TODO APP'}/>
     </div>
   );

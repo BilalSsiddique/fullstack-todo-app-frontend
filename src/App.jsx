@@ -11,7 +11,7 @@ import { useAppDispatch } from "./store/hook";
 import Register from "./Components/Register";
 import Login from "./Components/Login";
 import { BrowserRouter } from "react-router-dom";
-
+import Navbar from "./Components/Navbar";
 function App() {
   const dispatch = useAppDispatch();
 
@@ -23,14 +23,17 @@ function App() {
     <>
       <ToastContainer position="top-center" />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/todos" element={<Todos />} />
-          <Route path="/create-todo" element={<CreateTodo />} />
-          <Route path="/edit-todo/:id" element={<EditTodo />} />
-        </Routes>
+        <Navbar />
+        <div className=" h-screen  items-center flex justify-center">
+          <Routes>
+            <Route path="/Home" element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/Todos" element={<Todos />} />
+            <Route path="/Create-Todo" element={<CreateTodo />} />
+            <Route path="/edit-todo/:id" element={<EditTodo />} />
+          </Routes>
+        </div>
       </BrowserRouter>
     </>
   );
