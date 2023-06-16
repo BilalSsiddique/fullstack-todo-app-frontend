@@ -48,6 +48,7 @@ const Navbar = () => {
   const isAboveSmallScreens = useMediaQuery("(min-width:1000px)");
   const [selectedPage, setSelectedPage] = useState("/");
   const navigate = useNavigate()
+  const token = localStorage.getItem('token')
 
   const logout=()=>{
     localStorage.removeItem('token')
@@ -93,18 +94,33 @@ const Navbar = () => {
                 {/* <button onClick={logout}>
                     Logout
                 </button> */}
-                <button
-                  onClick={logout}
-                  className="bg-[#73D043] hover:bg-[#61fc14] text-left text-sm sm:text-base relative  mx-auto shadow-inner text-white w-fit p-1 px-8 sm:px-10 font-semibold "
-                >
-                  Logout
-                  <div className="w-4 h-4 sm:w-5 sm:h-5  rounded-full absolute right-2 bottom-1.5">
-                    <IoLogOut
-                      fill="white"
-                      className="hover:bg-black w-4 h-4 sm:w-5 sm:h-5 rounded-full"
-                    />
-                  </div>
-                </button>
+                {token ? (
+                  <button
+                    onClick={logout}
+                    className="bg-[#73D043] hover:bg-[#61fc14] text-left text-sm sm:text-base relative  mx-auto shadow-inner text-white w-fit p-1 px-8 sm:px-10 font-semibold "
+                  >
+                    Logout
+                    <div className="w-4 h-4 sm:w-5 sm:h-5  rounded-full absolute right-2 bottom-1.5">
+                      <IoLogOut
+                        fill="white"
+                        className="hover:bg-black w-4 h-4 sm:w-5 sm:h-5 rounded-full"
+                      />
+                    </div>
+                  </button>
+                ) : (
+                  <Link
+                   to ='/login'
+                    className="bg-[#73D043] hover:bg-[#61fc14] text-left text-sm sm:text-base relative  mx-auto shadow-inner text-white w-fit p-1 px-8 sm:px-10 font-semibold "
+                  >
+                    Login
+                    <div className="w-4 h-4 sm:w-5 sm:h-5  rounded-full absolute right-2 bottom-1.5">
+                      <IoLogOut
+                        fill="white"
+                        className="hover:bg-black w-4 h-4 sm:w-5 sm:h-5 rounded-full"
+                      />
+                    </div>
+                  </Link>
+                )}
               </div>
 
               {/* <div className="bg-gray-200 relative h-11 w-11 p-1 flex justify-center items-center rounded-full ">
