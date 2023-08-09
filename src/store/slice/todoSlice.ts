@@ -56,7 +56,7 @@ export const fetchTodos = createAsyncThunk(
     console.log("bodysssssssssss", params);
     try {
       const response = await axios.get(
-        "https://fullstack-todo-app-backend.up.railway.app/todos/",
+        "https://clever-purse-bear.cyclic.app/todos/",
         {
           headers: { Authorization: `Bearer ${params?.token}` },
           params: {
@@ -97,7 +97,7 @@ export const deleteTodos = createAsyncThunk(
     const { token } = params;
     return axios
       .delete(
-        `https://fullstack-todo-app-backend.up.railway.app/todos/${todoId}`,
+        `https://clever-purse-bear.cyclic.app/todos/${todoId}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -116,7 +116,7 @@ export const saveTodos = createAsyncThunk(
     const { body } = data;
     return axios
       .post(
-        `https://fullstack-todo-app-backend.up.railway.app/todos/create-todo`,
+        `https://clever-purse-bear.cyclic.app/todos/create-todo`,
         body,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -133,7 +133,7 @@ export const getTodo = createAsyncThunk("todo/getTodo", async (param: any) => {
   const { token } = param;
   const { id } = param;
   return axios
-    .get(`https://fullstack-todo-app-backend.up.railway.app/todos/${id}`, {
+    .get(`https://clever-purse-bear.cyclic.app/todos/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     .then((res) => {
@@ -152,7 +152,7 @@ export const editTodos = createAsyncThunk(
     // console.log("id inside editRodos", id, upbody, token);
     return axios
       .put(
-        `https://fullstack-todo-app-backend.up.railway.app/todos/${id}`,
+        `https://clever-purse-bear.cyclic.app/todos/${id}`,
         upbody,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -170,7 +170,7 @@ export const registerUser = createAsyncThunk(
     // console.log("bodysssssssssss", body);
     try {
       const response = await axios.post(
-        `https://fullstack-todo-app-backend.up.railway.app/register`,
+        `https://clever-purse-bear.cyclic.app/register`,
         body
       );
       // console.log("response on todoSlice", response);
@@ -201,7 +201,7 @@ export const loginUser = createAsyncThunk(
     // console.log("bodysssssssssss", body);
     try {
       const response = await axios.post(
-        `https://fullstack-todo-app-backend.up.railway.app/login`,
+        `https://clever-purse-bear.cyclic.app/login`,
         body
       );
       // console.log("response on todoSlice", response);
